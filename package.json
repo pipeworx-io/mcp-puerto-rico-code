@@ -1,0 +1,32 @@
+{
+  "name": "@pipeworx/mcp-puerto-rico-code",
+  "version": "0.1.0",
+  "description": "Puerto Rico statutes — 'leyes' (acts) of the Puerto Rico Legislature,",
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "bin": {
+    "mcp-puerto-rico-code": "bin/cli.js"
+  },
+  "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "puerto-rico-code"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pipeworx-io/mcp-puerto-rico-code.git"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "tsx": "^4.19.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "@cloudflare/workers-types": "^4.20260405.1"
+  },
+  "pipeworx": {
+    "sourceHash": "v1-b11d63c1fee95af5968b7271e99e1380a9afaa19efa74b8d71e05bfa2effa744",
+    "sourceCommit": "0ce6905893fe8da0d285be2f05754a4200d67371"
+  }
+}
