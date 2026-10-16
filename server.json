@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.pipeworx-io/puerto-rico-code",
   "title": "Puerto Rico Code",
-  "description": "Puerto Rico statutes — 'leyes' (acts) of the Puerto Rico Legislature,",
-  "version": "0.1.0",
+  "description": "Puerto Rico statutes — 'leyes' (acts) of the Puerto Rico Legislature, section/article lookup and…",
+  "version": "0.1.1",
   "websiteUrl": "https://pipeworx.io/packs/puerto-rico-code",
   "repository": {
     "url": "https://github.com/pipeworx-io/mcp-puerto-rico-code",
