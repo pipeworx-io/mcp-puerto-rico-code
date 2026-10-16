@@ -1325,7 +1325,18 @@ async function extractPdfText(buf: ArrayBuffer, options?: PdfExtractOptions): Pr
 
   const TOKEN_RE =
     /\/(\S+)\s+[\d.]+\s+Tf|\[((?:\\.|[^\]])*)\]\s*TJ|<([0-9A-Fa-f\s]*)>\s*Tj|\(((?:\\.|[^()])*)\)\s*Tj|1\s+0\s+0\s+1\s+[\d.-]+\s+([\d.-]+)\s+Tm/g;
-  const TJ_PIECE_RE = /\(((?:\\.|[^()])*)\)|<([0-9A-Fa-f\s]*)>/g;
+  // Third alternative (bare number) added for Indonesia's JDIH statute PDFs
+  // (jdih.setneg.go.id, fleet #3121): that producer never writes a literal
+  // space byte between words — "REPUBLIK INDONESIA" is encoded as one TJ run
+  // `[(…K)-269.0(I)…]`, where the -269 IS the word gap, not kerning. Every
+  // sampled font's intra-word kerning tops out around +-30 (observed: 2.0,
+  // -2.9, -14.0, -24.0); the real word gaps in the same document measured
+  // -269, -286, -290, -692, -1396, -1400 — two clusters with nothing between
+  // them, so a flat threshold cleanly separates "kerning" from "space" without
+  // needing the current font size (the TJ number is already in thousandths of
+  // text space, before the Tfs/Th scale-up ISO 32000 §9.4.3 applies).
+  const TJ_PIECE_RE = /\(((?:\\.|[^()])*)\)|<([0-9A-Fa-f\s]*)>|(-?\d+(?:\.\d+)?)/g;
+  const TJ_WORD_GAP_THRESHOLD = -100;
 
   function decodeRun(dec: FontDecoder, literal: string | undefined, hex: string | undefined): string {
     if (literal !== undefined) {
@@ -1450,7 +1461,17 @@ async function extractPdfText(buf: ArrayBuffer, options?: PdfExtractOptions): Pr
       }
       const dec = (currentFont && fontMap.get(currentFont)) || { kind: 'winansi' as const };
       if (m[2] !== undefined) {
-        for (const piece of m[2].matchAll(TJ_PIECE_RE)) out += decodeRun(dec, piece[1], piece[2]);
+        for (const piece of m[2].matchAll(TJ_PIECE_RE)) {
+          if (piece[3] !== undefined) {
+            // A big negative adjustment between two TJ pieces with no
+            // literal space byte at all — see TJ_PIECE_RE's comment above.
+            // Skip if `out` already ends in whitespace so a producer that
+            // DOES write literal spaces never gets a doubled one.
+            if (parseFloat(piece[3]) <= TJ_WORD_GAP_THRESHOLD && !/\s$/.test(out)) out += ' ';
+            continue;
+          }
+          out += decodeRun(dec, piece[1], piece[2]);
+        }
       } else if (m[3] !== undefined) {
         out += decodeRun(dec, undefined, m[3]);
       } else if (m[4] !== undefined) {
