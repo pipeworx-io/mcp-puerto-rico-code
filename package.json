@@ -1,12 +1,20 @@
 {
   "name": "@pipeworx/mcp-puerto-rico-code",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Puerto Rico statutes — 'leyes' (acts) of the Puerto Rico Legislature, section/article lookup and search, including the '33 LPRA 5001'-style citation to Leyes de Puerto Rico Anotadas (LPRA).",
   "type": "module",
-  "main": "src/index.ts",
-  "types": "src/index.ts",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./tools.json": "./tools.json",
+    "./package.json": "./package.json"
+  },
   "bin": {
     "mcp-puerto-rico-code": "bin/cli.js"
+  },
+  "files": ["bin/", "lib/", "tools.json", "server.json"],
+  "engines": {
+    "node": ">=18"
   },
   "keywords": ["mcp", "mcp-server", "model-context-protocol", "pipeworx", "puerto-rico-code"],
   "license": "MIT",
@@ -14,19 +22,12 @@
     "type": "git",
     "url": "git+https://github.com/pipeworx-io/mcp-puerto-rico-code.git"
   },
-  "scripts": {
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
-    "tsx": "^4.19.0"
-  },
-  "devDependencies": {
-    "typescript": "^5.9.3",
-    "@cloudflare/workers-types": "^4.20260405.1"
-  },
+  "mcpName": "io.github.pipeworx-io/puerto-rico-code",
   "pipeworx": {
-    "sourceHash": "v1-f9445860475ce321b1f91e814ea99e7f4aa6678251fd5a559c2415403399d6dd",
-    "sourceCommit": "a03f96ed672b8c149593c64ecbf30280cabf084c"
+    "mode": "gateway",
+    "slug": "puerto-rico-code",
+    "gatewaySlug": "puerto-rico-code",
+    "sourceHash": "v1-23fd5d26d907d802a49d6e1f1826246f476958f6921c4edeeda1f1ffb7814a9d",
+    "sourceCommit": "6bae4cfa7b6a73bbe014dc8820a19c80c842b21e"
   }
 }
