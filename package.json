@@ -1,6 +1,6 @@
 {
   "name": "@pipeworx/mcp-puerto-rico-code",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Puerto Rico statutes — 'leyes' (acts) of the Puerto Rico Legislature, section/article lookup and search, including the '33 LPRA 5001'-style citation to Leyes de Puerto Rico Anotadas (LPRA).",
   "type": "module",
   "main": "lib/index.js",
@@ -27,7 +27,7 @@
     "mode": "gateway",
     "slug": "puerto-rico-code",
     "gatewaySlug": "puerto-rico-code",
-    "sourceHash": "v1-23fd5d26d907d802a49d6e1f1826246f476958f6921c4edeeda1f1ffb7814a9d",
-    "sourceCommit": "6bae4cfa7b6a73bbe014dc8820a19c80c842b21e"
+    "sourceHash": "v1-bbfa1539e8100cef38058563279589cc11a53c8bd5706a06883ac11188c1c1ef",
+    "sourceCommit": "db27387ed3ef7ec4805d465f7964a7f65f937006"
   }
 }
